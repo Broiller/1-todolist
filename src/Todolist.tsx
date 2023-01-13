@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
+import {FilterButtonNameType} from "./App";
+
 
 type TodolistPropsType = {
-    shapka: string;
+    title: string;
     tasks: Array<TasksType>
+    removeTask: (taskID: number) => void
 }
 
 export type TasksType = {
@@ -12,26 +15,46 @@ export type TasksType = {
 }
 
 export const Todolist = (props: TodolistPropsType) => {
+    let [filterButtonName, setFilterButtonName] = useState<FilterButtonNameType>( "All")
+    console.log(filterButtonName)
+    let durshlag = props.tasks
+
+    if(filterButtonName === "Active") {
+        durshlag = props.tasks.filter(el => el.isDone)
+    }
+
+    if(filterButtonName === "Completed") {
+        durshlag = props.tasks.filter(el => !el.isDone)
+    }
+    const filteredCurrentTasks = (buttonName: FilterButtonNameType) => {
+        setFilterButtonName(buttonName)
+    }
+
+
     return (
         <div>
-            <h3>{props.shapka}</h3>
+            <h3>{props.title}</h3>
             <div>
                 <input/>
                 <button>+</button>
             </div>
             <ul>
                 {
-                    props.tasks.map((el) => {
+                    durshlag.map((el) => {
                         return (
-                            <li><input type="checkbox" checked={el.isDone}/> <span>{el.title}</span></li>
+                            <li key={el.id}>
+                                <button onClick={() => props.removeTask(el.id)}>X</button>
+                                <input type="checkbox" checked={el.isDone}/>
+                                <span>{el.title}</span>
+                            </li>
                         )
                     })
                 }
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => filteredCurrentTasks("All")}>All</button>
+                <button onClick={() => filteredCurrentTasks("Active")}>Active</button>
+                <button onClick={() => filteredCurrentTasks("Completed")}>Completed</button>
             </div>
         </div>
     )

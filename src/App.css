@@ -17,3 +17,15 @@
 .active-filter {
   background-color: aquamarine;
 }
+
+.btn-active {
+  color: white;
+  background-color: hotpink;
+  border: 2px solid hotpink;
+  border-radius: 3px;
+}
+.addItemForm {
+  border: 2px solid hotpink;
+  border-radius: 3px;
+  padding: 10px;
+}

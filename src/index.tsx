@@ -2,14 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {lightBlue, pink, teal} from "@mui/material/colors";
 
+
+const theme = createTheme({
+    palette: {
+        primary: teal,
+        secondary: lightBlue,
+        mode: "dark"
+    }
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <ThemeProvider theme={theme}>
+          <App />
+      </ThemeProvider>
+
   </React.StrictMode>
 );
 

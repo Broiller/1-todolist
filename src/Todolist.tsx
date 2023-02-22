@@ -2,6 +2,8 @@ import React, {KeyboardEvent, ChangeEvent, useState, ChangeEventHandler, FC} fro
 import {FilterValueType} from "./App";
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
+import {Button, ButtonGroup, Checkbox, IconButton} from "@mui/material";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
 type TodolistPropsType = {
@@ -37,12 +39,21 @@ export const Todolist: FC<TodolistPropsType> = (props: TodolistPropsType) => {
 
             return (
                 <li key={task.id} className={taskClasses.join(" ")}>
-                    <input
+
+                    <Checkbox
                         onChange={changeTaskStatus}
-                        type="checkbox" checked={task.isDone}/>
+                        checked={task.isDone}/>
+
                     {/*<span>{task.title}</span>*/}
                     <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
-                    <button onClick={removeTask}>x</button>
+
+                    <IconButton
+                        onClick={removeTask}
+                        size={"small"}
+                        color={"primary"}
+                    >
+                        <HighlightOffIcon/>
+                    </IconButton>
                 </li>
             )
         })
@@ -60,7 +71,13 @@ export const Todolist: FC<TodolistPropsType> = (props: TodolistPropsType) => {
     return (
         <div>
             <h3><EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
-                <button onClick={removeTodolist}>x</button>
+                <IconButton
+                    onClick={removeTodolist}
+                    size={"small"}
+                    color={"primary"}
+                >
+                    <HighlightOffIcon/>
+                </IconButton>
             </h3>
             <AddItemForm addItem={addTask}/>
 
@@ -68,17 +85,24 @@ export const Todolist: FC<TodolistPropsType> = (props: TodolistPropsType) => {
                 {taskList}
             </ul>
             <div>
-                <button className={props.filter === 'all' ? "btn-active" : ""}
-                        onClick={handlerCreator('all')}>All
-                </button>
+                <ButtonGroup
+                    variant="contained"
+                    size={"small"}
+                    disableElevation
+                    fullWidth>
 
-                <button className={props.filter === 'active' ? "btn-active" : ""}
-                        onClick={handlerCreator('active')}>Active
-                </button>
+                    <Button sx={{mr: "2px"}}
+                            color={props.filter === "all" ? "secondary" : "primary"}
+                            onClick={handlerCreator('all')}>All</Button>
 
-                <button className={props.filter === 'completed' ? "btn-active" : ""}
-                        onClick={handlerCreator('completed')}>Completed
-                </button>
+                    <Button sx={{mr: "2px"}}
+                            color={props.filter === "active" ? "secondary" : "primary"}
+                            onClick={handlerCreator('active')}>Active</Button>
+
+                    <Button
+                        color={props.filter === "completed" ? "secondary" : "primary"}
+                        onClick={handlerCreator('completed')}>Completed</Button>
+                </ButtonGroup>
             </div>
         </div>
     );

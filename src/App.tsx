@@ -8,7 +8,7 @@ import {Menu} from "@mui/icons-material";
 
 export type FilterValueType = "all" | "completed" | "active";
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValueType
@@ -91,9 +91,9 @@ function App() {
         (tasks: Array<TasksType>, filter: FilterValueType): Array<TasksType> => {
             switch (filter) {
                 case "active":
-                    return tasks.filter(task => task.isDone === false)
+                    return tasks.filter(task => !task.isDone)
                 case "completed":
-                    return tasks.filter(task => task.isDone === true)
+                    return tasks.filter(task => task.isDone)
                 default:
                     return tasks
             }
